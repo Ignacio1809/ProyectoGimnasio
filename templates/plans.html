@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Planes
+{% endblock title %}
+
+{% block head %}
+<h1>Bienvenido a nuestros Planes</h1>
+{% endblock head %}
+
+{% block body %}
+<div class="container">
+    <div class="row-plans">
+        {% for p in plan %}
+        <div class="col-md-4">
+            <div class="card">
+                {% if p.id == 1 %}
+                <img class="imagen-card" src="static\images\plan_basico.JPG">
+                {% elif p.id == 2 %}
+                <img class="imagen-card" src="static\images\plan_intermedio.JPG">
+                {% elif p.id == 3 %}
+                <img class="imagen-card" src="static\images\plan_avanzado.JPG">
+                {% else %}
+                <img class="imagen-card" src="static\images\plan_basico.JPG">
+                {% endif %}
+                <h5 class="card-title">{{ p.nombre_plan }}</h5>
+                <p class="card-text">{{ p.descripcion }}</p>
+                <form action="" method="post">{% csrf_token %}
+                    <button type="submit" value="{{ p.id }}" name="id" class="card-button">Ver detalles</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock body %}
+

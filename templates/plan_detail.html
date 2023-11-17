@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Planes Por id
+{% endblock title %}
+{%block head%}
+<h1>Bienvenido a nuestros planes personalizados: {{ p.nombre_plan }}</h1>
+{%endblock head%}
+
+{% block body %}
+<div class="container-plan">
+    <div class="container-img">
+        {% if p.id == 1 %}
+            <img class="imagen-p" src="static\images\plan_basico.JPG">
+            {% elif p.id == 2 %}
+            <img class="imagen-p" src="static\images\plan_intermedio.JPG">
+            {% elif p.id == 3 %}
+            <img class="imagen-p" src="static\images\plan_avanzado.JPG">
+            {% else %}
+            <img class="imagen-p" src="static\images\plan_basico.JPG">
+        {% endif %}
+    </div>
+    <div class="plan-info">
+        <div class="plan-texto">
+            <h1>Bienvenido a nuestro plan: {{ p.nombre_plan }}</h1>
+            <h2>{{ p.duracion }}</h2>
+            <p>{{ p.descripcion }}</p>
+            <p>{{ p.beneficio }}</p>
+            <p>${{ p.precio }} CLP</p>
+        </div>
+        {% if request.user.is_authenticated %}
+        <form action="{% url 'create_payment' plan_id=p.id %}" method="post">
+            {% csrf_token %}
+            <button class="card-button" type="submit">Contratar Plan</button>
+        </form>
+        {%else%}
+        <a class="card-button" href="login">inicia sesion</a>
+        {% endif %}
+        
+    </div>
+</div>
+{% endblock body %}

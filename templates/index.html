@@ -1,0 +1,454 @@
+{% load static %} <!--Cargamos las etiquetas estáticas de Django para manejar archivos estáticos (imagenes, css,etc.)-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head> <!--Inicio del encabezado de la página web-->
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Deportes ROPF</title> <!--Título que aparece en la pestaña del navegador-->
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Iconos del sitio web -->
+  <link href="static/assets/img/logoDPR.png" rel="icon"> <!--Icono de la pestaña en el navegador-->
+  <link href="static/assets/img/logoDPR.png" rel="apple-touch-icon"> <!-- Icono para dispositivos Apple cuando se agrega a la pantalla de inicio -->
+
+  <!-- Fuentes externas de Google -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Estilos y bibliotecas CSS 
+  Estos archivos proporcionan archivos y funcionalidades adicionales a la página web-->
+  <link href="static/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="static/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="static/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+  <link href="static/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+
+  <!-- Estilo principal de la página -->
+  <link href="static/assets/css/style.css" rel="stylesheet">
+
+</head> <!--Fin del encabezado de la página-->
+
+<body> <!--Inicio del cuerpo de la página web-->
+
+  <!-- Encabezado del sitio web -->
+  <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center justify-content-lg-between">
+      <a  class="logo me-auto me-lg-0"><img src="static/images/logoDPR.png" id = "logopagina"alt="" class="img-fluid"></a> <!--logo del sitio web-->
+      <h1 class="logo me-auto me-lg-0"><a>Deportes ROPF<span>.</span></a></h1> <!--Nombre del sitio web-->
+      
+      <nav id="navbar" class="navbar order-last order-lg-0"><!--Navegación del sitio web-->
+        <ul> <!--lista de enlace de navegación-->
+          <li><a class="nav-link scrollto active" href="#hero">Inicio</a></li>
+          <li><a class="nav-link scrollto" href="#about">¿Quienes somos?</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'all_plans' %}">Planes</a></li>
+          <li><a class="nav-link scrollto " href="#testimonials">Comentarios</a></li>
+          
+          <!--Condicional de Django para verificar si el usuario está autenticado-->
+          {% if request.user.is_authenticated %}
+          <li><a class="nav-link scrollto" href="{% url 'profile' %}">Ver Perfil</a></li>
+          <li><a class="nav-link scrollto" href="/logout">Cerrar sesión</a></li>
+          {% else %}
+          <li><a class="nav-link scrollto" href="/signup">Registrarse</a></li>
+          
+
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- fin de la navegación -->
+     
+      <a class="get-started-btn scrollto" href="/login">Iniciar Sesión</a>
+      {% endif %}
+
+    </div>
+  </header><!-- Fin del encabezado  -->
+
+  <!-- Sección hero
+  Propósito: Captar la atención de los clientes
+  Contenido -->
+  <section id="hero" class="d-flex align-items-center justify-content-center">
+    <div class="container" data-aos="fade-up">
+      <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="150">
+        <div class="col-xl-6 col-lg-8">
+          <h1>Desafíate a ti mismo!<span></span></h1>
+          <h2>🧠 Entrenamientos personalizados</h2>
+          <h2>📚 Articulos sobre deporte</h2>
+          <h2>🏋️ Asesoría deportiva</h2>
+        </div>
+      </div>
+
+      <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box"><img src="static/images/musculo.png" id="musculo" alt="" class="img-fluid">
+            <h3><a href="">Entrena con nosotros</a></h3>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box"><img src="static/images/mancuerna.png" id="mancuerna" alt="" class="img-fluid"> 
+            <h3><a href="">Asesorías deportivas.</a></h3>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box"><img src="static/images/corazon.png" id="corazon" alt="" class="img-fluid">
+            <h3><a href="">Hábitos saludables.</a></h3>
+          </div>
+        </div>
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box"><img src="static/images/brocoli.png" id="brocoli" alt="" class="img-fluid">
+            <h3><a href="">Mejora tu ánimo.</a></h3>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- Fin sección #hero -->
+
+  <main id="main">
+
+    <!-- Información Personal -->
+    <section id="about" class="about">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row align-items-start">
+          <!--<div class="col-lg-6 order-1 order-lg-2" data-aos="fade-left" data-aos-delay="100">-->
+          <div class="col-lg-6 pt-4 pt-lg-0 content" data-aos="fade-right" data-aos-delay="100">
+            <h3>Bienvenido/a a DeporteROPF.</h3>
+            <p class="fst-italic">
+              Mi nombre es Rodrigo Arriaza, soy un apasionado preparador físico con más de 3 años de experiencia trabajando en la mejora del bienestar y 
+              la capacidad física de mis clientes. Mi trayectoria me ha llevado a tener el privilegio de guiar y asistir a más 
+              de 20 personas en su camino hacia el logro de sus metas físicas y de salud, adaptándome a las necesidades y 
+              objetivos de cada uno para asegurar el éxito en su jornada. Con base en Gacitúa, he creado un espacio exclusivo en mi gimnasio en casa, un lugar seguro 
+              y equipado con todo lo necesario para brindar entrenamientos personalizados y orientados a resultados. 
+              Este entorno controlado y familiar facilita una conexión más cercana y confiable con cada uno de mis entrenados, permitiendo desarrollar rutinas específicas que se alinean perfectamente con las metas individuales.
+            </p>
+            <p>
+              Mi experiencia no se limita al gimnasio; he tenido el privilegio de colaborar con:
+            </p>
+            <ul>
+              <li><i class="ri-check-double-line"></i> Escuelas de Fútbol.</li>
+              <li><i class="ri-check-double-line"></i> Talleres deportivos Municipales.</li>
+              <li><i class="ri-check-double-line"></i> Taller de entrenamiento funcional.</li>
+            </ul>
+            
+          </div>
+          <div class="col-lg-6 video-container" data-aos="fade-left" data-aos-delay="100">
+            <video id="video" class="img-fluid" controls preload="metadata">
+              <source src="static/images/video_proyecto.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Features Section ======= -->
+    <section id="features" class="features">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <div class="image col-lg-6" style='background-image: url("static/images/pequenos.jpg");' data-aos="fade-right"></div>
+          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="100">
+            <div class="icon-box mt-5 mt-lg-0" data-aos="zoom-in" data-aos-delay="150">
+              <i class='bx bx-wink-smile'></i>
+              <h4>Nuestros Objetivos son:</h4>
+              <p>Generar un vínculo más allá de el trabajo, creando un ambiente donde logre explotar todas su condiciones físicas y teniendo un lazo más directo 
+                con los objetivos de cada entrenado, de esta manera cambiar la vida de cada cliente</p>
+            </div>
+            <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
+              <i class="bx bx-heart"></i>
+              <h4>Nuestra Visión:</h4>
+              <p>Ser reconocidos como el principal centro de bienestar de la comuna, donde las personas no solo van a entrenar, 
+                sino a vivir una experiencia transformadora. Queremos que, al pensar en salud, fitness y comunidad, las personas piensen en nuestro gimnasio como su primera opción.</p>
+            </div>
+            <div class="icon-box mt-5" data-aos="zoom-in" data-aos-delay="150">
+              <i class="bx bx-dumbbell"></i>
+              <h4>Nuestra Misión</h4>
+              <p>Ofrecer un espacio seguro y motivador donde las personas de todas las edades y niveles de habilidad puedan mejorar su salud física y mental, 
+                a través de una variedad de actividades físicas y programas diseñados. Nuestro compromiso es brindar herramientas, atención 
+                personalizada y educación a nuestros miembros, para que logren sus objetivos y se sientan parte de una comunidad que valora el bienestar integral.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Features Section -->
+
+    <!-- Sección de sevicios -->
+    
+    <section id="services" class="services">
+      <div class="container" data-aos="fade-up">
+        <div class="section-title">
+          <h2>Servicios</h2>
+          <p>Lo que tenemos para ti:</p>
+        </div>
+      </div>
+      
+    
+      <div class="row-services">
+        {%for p in plan%}
+        <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+          <a href='plans/{{p.id}}' class="link-box"> 
+            <div class="icon-box">
+              <div class="icon"><i class="bx bx-body"></i></div>
+              <h4>{{p.nombre_plan}}</h4>
+              <p>{{p.descripcion}}</p>
+            </div>
+          </a> 
+        </div>
+        {%endfor%}
+      </div>
+    
+    </section><!-- End Services Section -->
+    
+    <!-- ======= Testimonials Section ======= -->
+    <section id="testimonials" class="testimonials">
+      <div class="container" data-aos="zoom-in">
+
+        <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper-wrapper">
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="static/images/Thomas.jpg" class="testimonial-img" alt="">
+                <h3>Thomas Castro</h3>
+                <h4>Ingeniero Constructor</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Por supuesto que ha sido todo un agrado entrenar aquí, el ambiente es grato y me sirve para relajarme.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="static/images/jayson.jpeg" class="testimonial-img" alt="">
+                <h3>Jayson Norambuena</h3>
+                <h4>Estudiante</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Debido a mis clases me he ausentado un tiempo, pero admito que me encantó ir al gimnasio.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+
+            <div class="swiper-slide">
+              <div class="testimonial-item">
+                <img src="static/images/yo.jpg" class="testimonial-img" alt="">
+                <h3>Ignacio Orellana</h3>
+                <h4>Ingeniero Informático</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  Llevo años entrenando con Rodrigo, espero que sigan siendo muchos años más.
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            </div><!-- End testimonial item -->
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+
+      </div>
+    </section><!-- End Testimonials Section -->
+
+    <!-- ======= Team Section ======= -->
+    <section id="team" class="team">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">  br
+          <h2>Información Adicional:</h2>
+          <p>Revisa nuestros post informativos:</p>
+        </div>
+        
+        <div id="carouselExampleFade" class="carousel slide carousel-fade carousel-slide">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img src="static/images/habitos.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="static/images/errores.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="static/images/que_hacer.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="static/images/porque_entrenar.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="static/images/beneficios.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="static/images/inconvenientes.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="static/images/turnos.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="static/images/efectos_nocivos.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="static/images/tipo_descarga2.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="static/images/tipo_descarga.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="static/images/beneficios_descarga.jpg" class="d-block w-100" alt="...">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+        
+    </section><!-- End Team Section -->
+  
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Contactos</h2>
+          <p>Contactáte con nosotros ante cualquier duda</p>
+        </div>
+
+        <div class="row mt-5">
+
+          <div class="col-lg-4">
+            <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Estamos ubicados en:</h4>
+                <p>La Higuera #1045 / Isla de Maipo</p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Correo:</h4>
+                <p>rodriarriaza5y3@gmail.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Telefono:</h4>
+                <p>+56 9 7504 2684</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0">
+
+            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <div class="row">
+                <div class="col-md-6 form-group">
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Tu Nombre" required>
+                </div>
+                <div class="col-md-6 form-group mt-3 mt-md-0">
+                  <input type="email" class="form-control" name="email" id="email" placeholder="Tu correo" required>
+                </div>
+              </div>
+              <div class="form-group mt-3">
+                <textarea class="form-control" name="message" rows="5" placeholder="Escribenos tus dudas 😊" required></textarea>
+              </div>
+              <div class="my-3">
+                <div class="loading">Cargando</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Tu mensaje ha sido enviado. Gracias!</div>
+                <div class="sent-message"></div>
+              </div>
+              <div class="text-center"><button type="submit">Enviar Mensaje</button></div>
+            </form>
+
+          </div>
+
+        </div>
+        <br>
+        
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6">
+            <div class="footer-info">
+              <h3>Deportes ROPF<span></span></h3>
+              <p>
+                La Higuera #1045 <br>
+                Santiago de Chile, Isla de Maipo<br><br>
+                <strong>Phone:</strong> +56 9 7199 4790<br>
+                <strong>Email:</strong> Rodrigo Arriaza@gmail.com<br>
+              </p>
+              <div class="social-links mt-3">
+                <a href="https://www.youtube.com/@rodrigoarriaza5139" class="youtube"><i class="bx bxl-youtube"></i></a>
+                <a href="https://instagram.com/deporte.ropf?igshid=YTQwZjQ0NmI0OA==" class="facebook"><i class="bx bxl-facebook"></i></a>
+                <a href="https://instagram.com/deporte.ropf?igshid=YTQwZjQ0NmI0OA==" class="instagram"><i class="bx bxl-instagram"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-6 footer-links">
+            <h4>Links de Ayuda</h4>
+            <ul>
+              <li><i class="bx bx-chevron-right"></i> <a href="#hero">Inicio</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#about">¿Quiénes Somos?</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#services">Servicios</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#testimonials">Testimonios</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Ignacio Orellana</span></strong>. Todos los derechos reservados
+      </div>
+      <div class="credits">
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/gp-free-multipurpose-html-bootstrap-template/ -->
+        Diseñado por <a href="#">IO</a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="static/assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="static/assets/vendor/aos/aos.js"></script>
+  <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="static/assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="static/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="static/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="static/assets/vendor/php-email-form/validate.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="static/assets/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+
+</body>
+
+</html>

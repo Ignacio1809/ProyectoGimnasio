@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}
+Problema de pago
+{% endblock title %}
+{% block head %}
+<h1>Hemos tenido problemas</h1>
+
+<div class="container mt-2">
+    <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+
+    {% for message in messages %}
+    <div class = "alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+        <strong></strong>{{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+    {% endfor %}
+
+    <h1>Hemos tenido problemas procesando tu pago, por favor vuelve a intentarlo más tarde</h1>
+
+    </div>
+</div>
+{% endblock head %}
