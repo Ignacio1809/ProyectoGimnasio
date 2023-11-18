@@ -145,7 +145,7 @@ def create_payment(request, plan_id):
                 "success": "http://127.0.0.1:8000/payment_success/",
                 "failure": "http://127.0.0.1:8000/pago_fallido/",
             },
-            # Asumiendo que quieres pasar el email del usuario como referencia externa
+            # Asumiendo que quieres pasar el email del cliente como referencia externa
             "external_reference": request.user.email,
         }
         
@@ -205,19 +205,18 @@ def payment_success(request):
 User = get_user_model()
 
 def profile(request):
-    if not request.user.is_authenticated:
-        # Redirige al nombre de la ruta de inicio de sesión
-        return redirect('nombre_de_la_ruta_de_login')  # Asegúrate de que esto corresponda con tus urls.py
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('handlelogin')
 
     try:
-        # Aquí usas User para realizar operaciones relacionadas con el modelo de usuario si es necesario.
-        cliente_obj = get_object_or_404(cliente, email=request.user.email)
+        cliente_obj = cliente.objects.get(email=user.email)
         plan_actual = cliente_obj.plan_actual
+        print("Cliente:", cliente_obj)  # Imprime el objeto cliente
+        print("Plan actual:", plan_actual)  # Imprime el plan actual
         return render(request, "profile.html", {'cliente': cliente_obj, 'plan': plan_actual})
     except cliente.DoesNotExist:
-        messages.error(request, "Perfil no encontrado.")
-        return redirect('login')  # Puede ser la página de inicio o cualquier otra
-# Redirigir a las páginas de éxito y fracaso del pago
+        return render(request, "error.html", {'mensaje': "Perfil no encontrado."})
 
 def pago_fallido(request):
     return render(request, "pago_fallido.html")

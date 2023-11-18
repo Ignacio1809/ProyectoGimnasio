@@ -9,8 +9,8 @@ urlpatterns = [
     path('logout', views.handleLogout, name="handleLogout"),
     path('plans/<int:Plan_id>/', views.single_plan, name="single_plan"),
     path('create_payment/<int:plan_id>/', views.create_payment, name="create_payment"),
+    path('payment_success/', views.payment_success, name="payment_success"),
     path('profile/', views.profile, name="profile"),
     path('pago-fallido/', views.pago_fallido, name="pago_fallido"),
-    path('payment_success/', views.payment_success, name="payment_success"),
  
 ]
