@@ -191,7 +191,7 @@
       <div class="row-services">
         {%for p in plan%}
         <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
-          <a href='plans/{{p.id}}' class="link-box"> 
+          <a href="{% url 'all_plans' %}" class="link-box"> 
             <div class="icon-box">
               <div class="icon"><i class="bx bx-body"></i></div>
               <h4>{{p.nombre_plan}}</h4>
