@@ -20,8 +20,46 @@ Perfil
     </ul>
 
 </div>
+{% if cliente.plan_actual %}
+<div class="col-md-8">
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Informe
+                    </button>
+                </h5>
+                
+            </div>
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <!-- Suponiendo que informe_url es un campo de tu modelo Plan -->
+                    <a href="{{ cliente.plan_actual.informe_url }}" download>Descargar Informe</a>
+                </div>
+            </div>
 
-<div>
-    
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Vídeos
+                    </button>
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <!-- Suponiendo que videos_urls es una lista de URLs de tu modelo Plan -->
+                    {% for video_url in cliente.plan_actual.get_videos_urls %}
+                        <!-- Aquí colocas el contenido que quieres mostrar para cada video, por ejemplo un enlace o un reproductor embebido -->
+                        <a href="{{ cliente.plan_actual.video_url }}" target="_blank">Ver Vídeo</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
+{% endif %}
 {% endblock head %}

@@ -1,5 +1,5 @@
 from django.db import models
-
+import json
 # Create your models here.
 #en este archivo crearemos las tablas de nuestra base de datos 
 
@@ -10,6 +10,15 @@ class Plan(models.Model):
     precio = models.FloatField()
     duracion =  models.CharField(max_length=20)
     beneficio= models.TextField()
+    informe_url = models.URLField(max_length=200, blank=True, null=True)
+    videos_urls = models.TextField(help_text="Ingresa las urls de los videos", blank=True, null=True)
+    
+    def set_videos_urls(self, videos_list):
+        self.videos_urls = json.dumps(videos_list)
+
+    def get_videos_urls(self):
+        return json.loads(self.videos_urls) if self.videos_urls else []
+
     def __str__(self):
         return self.nombre_plan
 
