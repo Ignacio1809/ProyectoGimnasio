@@ -1373,3 +1373,27 @@ section {
 
   
 }
+
+details{
+  background: #4a4a4a;
+  padding: .5rem;
+  border-radius: 6px;
+  margin: .5rem;
+  cursor: pointer; 
+  color: white;
+}
+
+summary{
+  list-style: none;
+}
+
+summary::before{
+  content: '->';
+  padding-right: 1rem;
+}
+
+.list-group-item {
+  padding-right: 1rem; /* Ajustar el padding */
+  padding-left: 1rem; /* Ajustar el padding */
+}
+
