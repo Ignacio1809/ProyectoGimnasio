@@ -128,7 +128,7 @@ def create_payment(request, plan_id):
         request.session['plan_id'] = plan_id
         
         # Instanciar el SDK de Mercado Pago con el access token
-        sdk = SDK("TEST-8573264098376315-111921-cf00fec69950c6d0dc1fcbf32ae0e3db-1536335135")
+        sdk = SDK("APP_USR-6900103224898204-111921-e3c875584a5866ccde9f4635e32722a4-1555939347")
         
         # Crear datos de la preferencia de pago
         preference_data = {
