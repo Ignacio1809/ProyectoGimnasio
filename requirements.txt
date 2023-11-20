@@ -45,7 +45,7 @@ kiwisolver==1.4.4
 MarkupSafe==2.1.2
 matplotlib==3.7.1
 matplotlib-inline==0.1.6
-Mensajes @ file:///C:/Users/Ignacio/Desktop/Modulos%20Y%20Paquetes/dist/Mensajes-1.0.tar.gz
+#Mensajes @ file:///C:/Users/Ignacio/Desktop/Modulos%20Y%20Paquetes/dist/Mensajes-1.0.tar.gz
 mistune==2.0.5
 mysqlclient==2.2.0
 nbclassic==0.5.5
