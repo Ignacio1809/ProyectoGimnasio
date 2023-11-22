@@ -220,3 +220,6 @@ def profile(request):
 
 def pago_fallido(request):
     return render(request, "pago_fallido.html")
+
+def home(request):
+    return render(request, 'index.html')
