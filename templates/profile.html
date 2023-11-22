@@ -3,41 +3,50 @@
 Perfil
 {% endblock title %}
 {% block head %}
-<h1>Bienvenido a tu perfil</h1>
-
-<div class="container mt-2">
+<div class="container mt-5">
     <div class="row">
-        <!-- Columna de información del cliente -->
+        <!-- Columna de perfil a la izquierda -->
         <div class="col-md-7">
-            <ul class="list-group">
-                <li class="list-group-item bg-dark text-white"><h2>Nombre: {{ cliente.nombre }} {{ cliente.apellido }}</h2></li>
-                <li class="list-group-item bg-dark text-white"><h2>Teléfono: {{ cliente.telefono }}</h2></li>
-                <li class="list-group-item bg-dark text-white"><h2>Email: {{ cliente.email }}</h2></li>
-                <li class="list-group-item bg-dark text-white"><h2>Estatura: {{ cliente.estatura }} m</h2></li>
-                <li class="list-group-item bg-dark text-white"><h2>Peso: {{ cliente.peso }} kg</h2></li>
-                <li class="list-group-item bg-dark text-white"><h2>Plan Actual: {{ cliente.plan_actual }}</h2></li>
-            </ul>
+            <div class="perfil-card">
+                <div class="card-header bg-dark text-white">
+                    <h2>Bienvenido a tu perfil</h2>
+                </div>
+                <div class="card-body bg-light">
+                    <p class="custom-card-text">Nombre: {{ cliente.nombre }} {{ cliente.apellido }}</p>
+                    <p class="custom-card-text">Teléfono: {{ cliente.telefono }}</p>
+                    <p class="custom-card-text">Email: {{ cliente.email }}</p>
+                    <p class="custom-card-text">Estatura: {{ cliente.estatura }} m</p>
+                    <p class="custom-card-text">Peso: {{ cliente.peso }} kg</p>
+                    <p class="custom-card-text">Plan Actual: {{ cliente.plan_actual }}</p>
+                    <!-- Si tienes más información que quieras mostrar, sigue este patrón -->
+                </div>
+            </div>
         </div>
-        
-        <!-- Columna del acordeón -->
+
+        <!-- Columna de acordeón a la derecha -->
         {% if cliente.plan_actual %}
         <div class="col-md-5">
-            <details>
-                <summary>Obten acceso a tu Informe aquí</summary>
-                <div>
-                    <a href="{{ cliente.plan_actual.informe_url }}" download>Descargar Informe</a>
+            <div class="acordion-card">
+                <div class="details">
+                    <details>
+                        <summary>Obten acceso a tu Informe aquí</summary>
+                        <div>
+                            <a href="{{ cliente.plan_actual.informe_url }}" download>Descargar Informe</a>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>Obten acceso a tus videos aquí</summary>
+                        <div>
+                            {% for video_url in cliente.plan_actual.get_videos_urls %}
+                                <a href="{{ video_url }}" target="_blank">Ver Vídeo</a><br>
+                            {% endfor %}
+                        </div>
+                    </details>
                 </div>
-            </details>
-            <details>
-                <summary>Obten acceso a tus videos aquí</summary>
-                <div>
-                    {% for video_url in cliente.plan_actual.get_videos_urls %}
-                        <a href="{{ video_url }}" target="_blank">Ver Vídeo</a><br>
-                    {% endfor %}
-                </div>
-            </details>
+            </div>
         </div>
         {% endif %}
     </div>
 </div>
+
 {% endblock head %}

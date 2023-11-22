@@ -1376,9 +1376,7 @@ section {
 
 details{
   background: #4a4a4a;
-  padding: .5rem;
-  border-radius: 6px;
-  margin: .5rem;
+  padding-top: 10px;
   cursor: pointer; 
   color: white;
 }
@@ -1392,8 +1390,70 @@ summary::before{
   padding-right: 1rem;
 }
 
+.acordion-card{
+  margin: 2rem auto;
+  width: 100%; /* Ajusta al ancho que prefieras */
+  background-color: #000; /* Fondo negro para la tarjeta */
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada para un efecto 3D */
+  overflow: hidden; /* Asegura que el border-radius se aplique a los hijos */
+  transition: transform 0.3s ease-in-out; /* Animación suave al pasar el mouse */
+}
 .list-group-item {
   padding-right: 1rem; /* Ajustar el padding */
   padding-left: 1rem; /* Ajustar el padding */
 }
+
+.perfil-card {
+  margin: 2rem auto;
+  width: 90%; /* Ajusta al ancho que prefieras */
+  background-color: #000; /* Fondo negro para la tarjeta */
+  border-radius: 8px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Sombra más pronunciada para un efecto 3D */
+  overflow: hidden; /* Asegura que el border-radius se aplique a los hijos */
+  transform: translateY(-5px); /* Eleva la tarjeta ligeramente al pasar el mouse */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.75); /* Sombra más grande al pasar el mouse */
+}
+
+.perfil-card:hover {
+  transform: translateY(-5px); /* Eleva la tarjeta ligeramente al pasar el mouse */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.75); /* Sombra más grande al pasar el mouse */
+}
+
+.card-header {
+  background-color: #1a1a1a; /* Un tono de gris muy oscuro para el encabezado */
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #555; /* Línea de separación */
+}
+
+.card-body {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05); /* Ligeramente visible para un efecto de capa */
+}
+
+.card-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  text-transform: capitalize; /* Opcional, para capitalizar los nombres */
+  font-size: 1.5rem; /* Tamaño de fuente más grande para el título */
+}
+
+.custom-card-text {
+  margin-bottom: 0.5rem;
+  line-height: 1.5; /* Espaciado de línea para mayor legibilidad */
+  border-bottom: 1px solid #555; /* Líneas de separación entre elementos */
+  padding-bottom: 0.5rem; /* Espacio antes de la línea de separación */
+}
+/* Si necesitas que el texto sea más grande o pequeño, ajusta el tamaño de fuente aquí */
+.d-flex {
+  display: flex;
+}
+.justify-content-end {
+  justify-content: flex-end;
+}
+.w-50 {
+  width: 50%;
+}
+
 

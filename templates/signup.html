@@ -3,76 +3,77 @@
 SignUp
 {% endblock title %}
 {% block head %}
-<h1>¡Registrate Aquí!</h1>
-<div class= "container mt-2">
+
+  <h1 class="text-center">¡Regístrate Aquí!</h1>
+  <div class="container mt-2">
     <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6">
-            
-        {% for message in messages %}
-        <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
-            <strong></strong> {{message}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <!-- Mensajes de alerta -->
+      {% for message in messages %}
+      <div class="col-12">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        {% endfor %}
-
-        <form action="/signup" method="post">{% csrf_token %}
-            
+      </div>
+      {% endfor %}
+  
+      <!-- Formulario de registro -->
+      <form action="/signup" method="post" class="w-100">
+        {% csrf_token %}
+        <div class="row">
+          <div class="col-12 col-md-6">
             <div class="form-group">
-                <input type="text" class="form-control mb-2" name="usernumber" placeholder="Número de Teléfono (+56)">
+              <input type="text" class="form-control mb-2" name="usernumber" placeholder="Número de Teléfono (+56)">
             </div>
-
             <div class="form-group">
-                <input type="text" class="form-control mb-2" name="fname" placeholder="Nombre(s)">
+              <input type="text" class="form-control mb-2" name="fname" placeholder="Nombre(s)">
             </div>
-
             <div class="form-group">
-                <input type="text" class="form-control mb-2" name="lastname" placeholder="Apellido(s)" >
+                <input type="text" class="form-control mb-2" name="lastname" placeholder="Apellido(s)">
             </div>
-            
-            <div class="form-group">
-                <input type="email" class="form-control" name="email" placeholder="email@ejemplo.com">
+           <div class="form-group">
+              <input type="number" step="0.01" class="form-control mt-2" name="height" placeholder="Estatura (cm)">
             </div>
-
-             <!-- Agregado: Campo para el Peso -->
-            <div class="form-group">
-                <input type="number" step="0.01" class="form-control mt-2" name="weight" placeholder="Peso (kg)" required>
-            </div>
-
-            <!-- Agregado: Campo para la Estatura -->
-            <div class="form-group">
-                <input type="number" step="0.01" class="form-control mt-2" name="height" placeholder="Estatura (cm)">
-            </div>
-
-            <!-- Agregado: Campo para la Fecha de Nacimiento 
-            <div class="form-group">
-                <input type="date" class="form-control mt-2" name="birthdate" placeholder="Fecha de Nacimiento">
-            </div>
-            -->
             <div class="form-group">
                 <input type="text" class="form-control mt-2" name="birthdate" placeholder="Fecha de Nacimiento" 
                 onfocus="(this.type='date')" onblur="(this.value === '' ? this.type='text' : this.type='date')">
             </div>
-            
+          </div>
+  
+          <div class="col-12 col-md-6">
+            <div class="form-group">
+                <input type="email" class="form-control mb-2" name="email" placeholder="email@ejemplo.com">
+            </div>
+            <div class="form-group">
+              <input type="number" step="0.01" class="form-control mt-2" name="weight" placeholder="Peso (kg)" required>
+            </div>
             <div class="form-group">
                 <input type="password" class="form-control mt-2" name="pass1" placeholder="Contraseña">
-            </div>
-
+              </div>
             <div class="form-group">
-                <input type="password" class="form-control mt-2" name="pass2" placeholder="Repetir contraseña">
+              <input type="password" class="form-control mt-2" name="pass2" placeholder="Repetir contraseña">
             </div>
-            <br>
-
-            <div class="d-grid gap-2">
-                <button class="btn btn-light" type="submit">Registrarse</button>
-            </div>
-        </form>
-        <br><a href="/login">¿Ya tienes una cuenta?</a>
-
+          </div>
+        </div>
+        
+        <!-- Botón de registro -->
+        <div class="row justify-content-center mt-4">
+          <div class="col-12 col-sm-8 col-md-4">
+            <button class="btn btn-light btn-lg btn-block" type="submit">Registrarse</button>
+          </div>
+        </div>
+        
+        <!-- Enlace de inicio de sesión -->
+        <div class="row justify-content-center mt-2-mobile mt-4">
+          <div class="col-12 text-center">
+            <a href="/login">¿Ya tienes una cuenta?</a>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="col-md-3"></div>
+  </div>
+  
 
-</div>
 
 
 {% endblock head %}
