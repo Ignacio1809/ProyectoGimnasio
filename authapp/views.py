@@ -223,3 +223,4 @@ def pago_fallido(request):
 
 def home(request):
     return render(request, 'index.html')
+

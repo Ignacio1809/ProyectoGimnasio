@@ -291,3 +291,14 @@
   new PureCounter();
 
 })()
+
+function toggleMobileNav() {
+  var navbar = document.getElementById('navbar').querySelector('ul');
+  if (navbar.style.display === "block") {
+    navbar.style.display = "none";
+  } else {
+    navbar.style.display = "block";
+  }
+}
+
+
