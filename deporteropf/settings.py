@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--8j+oe9cdvn2t7g0okm3!rx9&h@#&l1og_vs0=@hl--58y0cyn
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["wxfleh.pythonanywhere.com"]
 
 
 # Application definition
@@ -78,11 +78,10 @@ WSGI_APPLICATION = 'deporteropf.wsgi.application'
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'deporteropf',
-            'USER': 'root',
-            'PASSWORD': 'admin',
-            'HOST': 'localhost',
-            'PORT': '3306',
+            'NAME': 'wxfleh$deporteropf',
+            'USER': 'wxfleh',
+            'PASSWORD': 'Esteban.2002',
+            'HOST': 'wxfleh.mysql.pythonanywhere-services.com',
         }
     }
 
