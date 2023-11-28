@@ -12,5 +12,6 @@ urlpatterns = [
     path('payment_success/', views.payment_success, name="payment_success"),
     path('profile/', views.profile, name="profile"),
     path('pago-fallido/', views.pago_fallido, name="pago_fallido"),
+    path('update_video_status/', views.update_video_status, name='update_video_status'),
  
 ]

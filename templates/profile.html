@@ -3,11 +3,14 @@
 Perfil
 {% endblock title %}
 {% block head %}
-
+<meta name="csrf-token" content="{{ csrf_token }}">
 <div class="container mt-5">
     <div class="row">
         <!-- Columna de perfil a la izquierda -->
         <div class="col-md-7">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: {{ progress_percent }}%;" aria-valuenow="{{ progress_percent }}" aria-valuemin="0" aria-valuemax="100">{{ progress_percent|floatformat:2 }}%</div>
+            </div>
             <div class="perfil-card">
                 <div class="card-header bg-dark text-white">
                     <h2>Bienvenido a tu perfil</h2>
@@ -18,33 +21,43 @@ Perfil
                     <p class="custom-card-text">Email: {{ cliente.email }}</p>
                     <p class="custom-card-text">Estatura: {{ cliente.estatura }} m</p>
                     <p class="custom-card-text">Peso: {{ cliente.peso }} kg</p>
+                    <p class="custom-card-text">IMC: {{ cliente.imc|floatformat:2 }} kg</p>
                     <p class="custom-card-text">Plan Actual: {{ cliente.plan_actual }}</p>
                     <!-- Si tienes más información que quieras mostrar, sigue este patrón -->
                 </div>
             </div>
         </div>
 
-        <!-- Columna de acordeón a la derecha -->
+<!-- Columna de acordeón a la derecha -->
         {% if cliente.plan_actual %}
         <div class="col-md-5">
-            <div class="acordion-card">
-                <div class="details">
-                    <details>
-                        <summary>Obten acceso a tu Informe aquí</summary>
-                        <div>
-                            <a href="{{ cliente.plan_actual.informe_url }}" download>Descargar Informe</a>
-                        </div>
-                    </details>
-                    <details>
-                        <summary>Obten acceso a tus videos aquí</summary>
-                        <div>
-                            {% for video_url in cliente.plan_actual.get_videos_urls %}
-                                <a href="{{ video_url }}" target="_blank">Ver Vídeo</a><br>
-                            {% endfor %}
-                        </div>
-                    </details>
+            <!-- Acordeón para el informe -->
+            {% if cliente.plan_actual.informe_url %}
+                <details>
+                    <summary>Descargar Informe</summary>
+                    <div>
+                        <a href="{{ cliente.plan_actual.informe_url }}" download>Descargar Informe</a>
+                    </div>
+                </details>
+            {% endif %}
+
+            <!-- Acordeón para los videos -->
+            {% if cliente.plan_actual.videos.all %}
+            <details>
+                <summary>Ver Videos Semanales</summary>
+                <div>
+                    {% for video in cliente.plan_actual.videos.all %}
+                    <div>
+                        <a href="{{ video.url }}" target="_blank">Ver Vídeo de la Semana {{ video.semana }}</a>
+                        <!-- Checkbox para marcar si el video ha sido visto -->
+                        <input type="checkbox" id="video-{{ video.id }}" class="video-checkbox" data-video-id="{{ video.id }}"
+                            {% if video.id in videos_vistos_ids %}checked{% endif %}>
+                        <label for="video-{{ video.id }}"></label>
+                    </div>
+                    {% endfor %}
                 </div>
-            </div>
+            </details>
+        {% endif %}
         </div>
         {% endif %}
     </div>

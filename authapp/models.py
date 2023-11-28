@@ -1,23 +1,29 @@
 from django.db import models
+from django.contrib.auth.models import User
 import json
 # Create your models here.
 #en este archivo crearemos las tablas de nuestra base de datos 
 
 
+class Video(models.Model):
+    url = models.URLField(unique=True)
+    semana = models.IntegerField()  # Añade un campo para la semana si es necesario
+
+    def __str__(self):
+        return self.url
+
 class Plan(models.Model):
     nombre_plan = models.CharField(max_length=20)
     descripcion = models.TextField()
     precio = models.FloatField()
-    duracion =  models.CharField(max_length=20)
-    beneficio= models.TextField()
+    duracion = models.CharField(max_length=20)
+    beneficio = models.TextField()
     informe_url = models.URLField(max_length=200, blank=True, null=True)
-    videos_urls = models.TextField(help_text="Ingresa las urls de los videos", blank=True, null=True)
-    
-    def set_videos_urls(self, videos_list):
-        self.videos_urls = json.dumps(videos_list)
-
-    def get_videos_urls(self):
-        return json.loads(self.videos_urls) if self.videos_urls else []
+    # Nuevo campo para manejar el streaming
+    es_streaming = models.BooleanField(default=False)
+    # URL para la sesión de streaming, si es aplicable
+    url_streaming = models.URLField(max_length=200, blank=True, null=True)
+    videos = models.ManyToManyField(Video, blank=True)
 
     def __str__(self):
         return self.nombre_plan
@@ -49,3 +55,27 @@ class Pago(models.Model):
 
     def __str__(self):
         return f"{self.cliente.email} - {self.plan.nombre_plan} - {self.estado}"
+
+
+
+class VideoView(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)  # Relación con el modelo Video
+    viewed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username} viewed {self.video.url}: {self.viewed}"
+
+class UserVideoProgress(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    watched = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('user', 'video')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.video.url} - Watched: {self.watched}"
+    
+
+

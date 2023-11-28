@@ -301,4 +301,58 @@ function toggleMobileNav() {
   }
 }
 
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== '') {
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+          }
+      }
+  }
+  return cookieValue;
+}
+
+const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  const checkboxes = document.querySelectorAll('.video-checkbox');
+  const progressBar = document.getElementById('progress-bar');
+
+  checkboxes.forEach(function(checkbox) {
+      checkbox.addEventListener('change', function() {
+          const videoId = this.dataset.videoId;
+          const viewed = this.checked;
+
+          fetch('/update_video_status/', {
+              method: 'POST',
+              headers: {
+                  'X-CSRFToken': csrftoken,  // Ya deberías tener el token CSRF disponible
+                  'Content-Type': 'application/json',  // Cambia a json
+              },
+              body: JSON.stringify({video_id: videoId, viewed: viewed}),
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  // Actualizar la barra de progreso
+                  progressBar.style.width = `${data.progress_percent}%`;
+                  progressBar.textContent = `${data.progress_percent.toFixed(2)}%`;
+              } else {
+                  // Manejar el error
+                  console.error('Error al actualizar el estado del video');
+              }
+          })
+          .catch(error => {
+              console.error('Error en la solicitud fetch:', error);
+          });
+      });
+  });
+});
 
