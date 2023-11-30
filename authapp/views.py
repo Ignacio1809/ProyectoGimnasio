@@ -146,8 +146,8 @@ def create_payment(request, plan_id):
                 }
             ],
             "back_urls": {
-                "success": "https://wxfleh.pythonanywhere.com/payment_success/",
-                "failure": "https://wxfleh.pythonanywhere.com/pago_fallido/",
+                "success": "http://127.0.0.1:8000/payment_success/",
+                "failure": "http://127.0.0.1:8000/pago_fallido/",
             },
             # Asumiendo que quieres pasar el email del cliente como referencia externa
             "external_reference": request.user.email,
@@ -223,8 +223,8 @@ def update_video_status(request):
 
     videos_vistos = VideoView.objects.filter(user=request.user, viewed=True).count()
     total_videos = Video.objects.count()
-    progress_percent = (videos_vistos / total_videos) * 100 if total_videos else 0
-
+    progress_percent = (videos_vistos / total_videos) * 100 if total_videos > 0 else 0
+    
     return JsonResponse({'success': True, 'progress_percent': progress_percent})
 
 def profile(request):

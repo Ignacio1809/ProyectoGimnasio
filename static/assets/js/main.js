@@ -322,37 +322,54 @@ const csrftoken = document.querySelector('meta[name="csrf-token"]').getAttribute
 
 
 document.addEventListener('DOMContentLoaded', function() {
-  const checkboxes = document.querySelectorAll('.video-checkbox');
-  const progressBar = document.getElementById('progress-bar');
+  const videoLinks = document.querySelectorAll('.video-link');
 
-  checkboxes.forEach(function(checkbox) {
-      checkbox.addEventListener('change', function() {
-          const videoId = this.dataset.videoId;
-          const viewed = this.checked;
-
-          fetch('/update_video_status/', {
-              method: 'POST',
-              headers: {
-                  'X-CSRFToken': csrftoken,  // Ya deberías tener el token CSRF disponible
-                  'Content-Type': 'application/json',  // Cambia a json
-              },
-              body: JSON.stringify({video_id: videoId, viewed: viewed}),
-          })
-          .then(response => response.json())
-          .then(data => {
-              if (data.success) {
-                  // Actualizar la barra de progreso
-                  progressBar.style.width = `${data.progress_percent}%`;
-                  progressBar.textContent = `${data.progress_percent.toFixed(2)}%`;
-              } else {
-                  // Manejar el error
-                  console.error('Error al actualizar el estado del video');
-              }
-          })
-          .catch(error => {
-              console.error('Error en la solicitud fetch:', error);
-          });
-      });
+  videoLinks.forEach(function(link) {
+    link.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevenir la navegación por defecto
+      const videoId = this.dataset.videoId;
+      const checkbox = document.querySelector('.video-checkbox[data-video-id="' + videoId + '"]');
+      if (!checkbox.checked) {
+        updateVideoStatus(videoId, true);
+        checkbox.checked = true; // Marcar el checkbox como visto
+      }
+      window.open(this.href, '_blank'); // Abrir el video en una nueva pestaña
+    });
   });
-});
 
+  function updateVideoStatus(videoId, viewed) {
+    fetch('/update_video_status/', {
+      method: 'POST',
+      headers: {
+          'X-CSRFToken': csrftoken,
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({video_id: videoId, viewed: viewed}),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      if (data.success) {
+          // Actualiza la barra de progreso
+          const progressBar = document.querySelector('.progress-bar');
+          progressBar.style.width = data.progress_percent + '%';
+          progressBar.textContent = data.progress_percent.toFixed(2) + '%';
+    
+          // Verifica si la barra de progreso ha alcanzado el 100%
+          if (data.progress_percent >= 100) {
+              // Muestra un mensaje de felicitación
+              const successAlert = document.createElement('div');
+              successAlert.classList.add('alert', 'alert-success');
+              successAlert.setAttribute('role', 'alert');
+              successAlert.textContent = '¡Felicidades! Has completado tu plan al 100%.';
+              
+              // Inserta el mensaje antes de la barra de progreso o en la ubicación que desees
+              document.querySelector('.progress').before(successAlert);
+          }
+      }
+    })
+    .catch(error => {
+      console.error('Error en la solicitud fetch:', error);
+    });
+  }
+});

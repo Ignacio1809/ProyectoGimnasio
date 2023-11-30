@@ -8,9 +8,20 @@ Perfil
     <div class="row">
         <!-- Columna de perfil a la izquierda -->
         <div class="col-md-7">
-            <div class="progress">
-                <div class="progress-bar" role="progressbar" style="width: {{ progress_percent }}%;" aria-valuenow="{{ progress_percent }}" aria-valuemin="0" aria-valuemax="100">{{ progress_percent|floatformat:2 }}%</div>
-            </div>
+            {% if cliente.plan_actual %}
+                <!-- Si hay un plan actual, muestra la barra de progreso y el mensaje de felicitación si se ha completado el 100% -->
+                {% if progress_percent >= 100 %}
+                    <div class="alert alert-success" role="alert">
+                        ¡Felicidades! Has completado tu plan al 100%.
+                    </div>
+                {% endif %}
+
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ progress_percent }}%;" aria-valuenow="{{ progress_percent }}" aria-valuemin="0" aria-valuemax="100">{{ progress_percent|floatformat:2 }}%</div>
+                </div>
+            {% else %}
+                <!-- Si no hay un plan actual, no mostrar nada o podrías incluso mostrar un mensaje -->
+            {% endif %}
             <div class="perfil-card">
                 <div class="card-header bg-dark text-white">
                     <h2>Bienvenido a tu perfil</h2>
@@ -48,9 +59,8 @@ Perfil
                 <div>
                     {% for video in cliente.plan_actual.videos.all %}
                     <div>
-                        <a href="{{ video.url }}" target="_blank">Ver Vídeo de la Semana {{ video.semana }}</a>
-                        <!-- Checkbox para marcar si el video ha sido visto -->
-                        <input type="checkbox" id="video-{{ video.id }}" class="video-checkbox" data-video-id="{{ video.id }}"
+                        <a href="{{ video.url }}" class="video-link" data-video-id="{{ video.id }}">Ver Vídeo de la Semana {{ video.semana }}</a>
+                        <input type="checkbox" id="video-{{ video.id }}" class="video-checkbox" data-video-id="{{ video.id }}" disabled
                             {% if video.id in videos_vistos_ids %}checked{% endif %}>
                         <label for="video-{{ video.id }}"></label>
                     </div>
