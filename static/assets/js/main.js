@@ -337,6 +337,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+<<<<<<< Updated upstream
   function updateVideoStatus(videoId, viewed) {
     fetch('/update_video_status/', {
       method: 'POST',
@@ -373,3 +374,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 });
+=======
+$(document).ready(function() {
+  window.setTimeout(function() {
+      $(".alert").fadeTo(500, 0).slideUp(500, function(){
+          $(this).remove();
+      });
+  }, 4000);
+});
+>>>>>>> Stashed changes

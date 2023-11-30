@@ -11,7 +11,9 @@ from django.http import JsonResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
-
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from .models import User 
 # Create your views here.
 def Home(request):
     plans = Plan.objects.all()
@@ -41,7 +43,6 @@ def handlelogin(request):
                 messages.error(request, "Credenciales Invalidas")
                 return redirect('/login')
 
-
     return render(request,"handlelogin.html")
 
 def signup(request):
@@ -50,44 +51,57 @@ def signup(request):
         name = request.POST['fname']
         lname = request.POST['lastname']
         email = request.POST['email']
-        weight = float(request.POST['weight'])
-        height = float(request.POST['height'])/100
-        pass1=request.POST.get('pass1')
-        pass2=request.POST.get('pass2')
-        imc = weight/height**2
-        birth= request.POST['birthdate']
-        if len(number)>9 or len(number)<9:
-            messages.info(request, "El telefono ingresado debe tener al menos 9 dígitos")
+        weight = request.POST['weight']
+        height = request.POST['height']
+        pass1 = request.POST['pass1']
+        pass2 = request.POST['pass2']
+        birth = request.POST['birthdate']
+
+        # Verificaciones básicas
+        if not all([number, name, lname, email, weight, height, pass1, pass2, birth]):
+            messages.info(request, 'Todos los campos son obligatorios')
             return redirect('/signup')
-       
+
+        if len(number) != 9:
+            messages.info(request, "El teléfono ingresado debe tener 9 dígitos")
+            return redirect('/signup')
+
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.info(request, 'Email no válido')
+            return redirect('/signup')
+
         if pass1 != pass2:
             messages.info(request, "Las contraseñas ingresadas no son iguales.")
             return redirect('/signup')
-        
-        # Validar fuerza de contraseña
+
         try:
-            validate_password_strength(pass1)
+            validate_password_strength(pass1)  # Asegúrate de tener esta función definida
         except ValidationError as e:
             messages.info(request, e.message)
             return redirect('/signup')
-        
-        # Verificar si el correo ya existe
+
         if cliente.objects.filter(email=email).exists():
             messages.info(request, "El correo electrónico ingresado ya está en uso.")
             return redirect('/signup')
 
-        # Crear usuario de Django
-        user = User.objects.create_user(username=name, email=email, password=pass1)
-        usuario = cliente.objects.create(
-            telefono=number, nombre=name, apellido=lname, email=email, estatura=height, peso=weight, imc=imc, fecha_nac=birth, passwrd=pass1)
-        
-        request.session['user_email'] = email
+        # Conversión de peso y altura para cálculo de IMC
+        weight = float(weight)
+        height = float(height) / 100
+        imc = weight / (height ** 2)
 
+        # Creación del usuario y cliente
+        user = User.objects.create_user(username=name, email=email, password=pass1)
+        cliente.objects.create(
+            telefono=number, nombre=name, apellido=lname, email=email, estatura=height, peso=weight, imc=imc, fecha_nac=birth, passwrd=pass1
+        )
+
+        request.session['user_email'] = email
         messages.info(request, "Usuario creado con éxito.")
         return redirect('/login')
-    
-    return render(request,"signup.html")
-    
+
+    return render(request, "signup.html")
 
 def handleLogout(request):
     logout(request)
