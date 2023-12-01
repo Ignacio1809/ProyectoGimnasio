@@ -160,8 +160,8 @@ def create_payment(request, plan_id):
                 }
             ],
             "back_urls": {
-                "success": "http://127.0.0.1:8000/payment_success/",
-                "failure": "http://127.0.0.1:8000/pago_fallido/",
+                "success": "https://wxfleh.pythonanywhere.com/payment_success/",
+                "failure": "https://wxfleh.pythonanywhere.com/pago_fallido/",
             },
             # Asumiendo que quieres pasar el email del cliente como referencia externa
             "external_reference": request.user.email,
